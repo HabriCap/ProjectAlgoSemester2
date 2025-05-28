@@ -4,6 +4,8 @@ using namespace std;
 struct Node
 {
     string nama;
+    string nohp;
+    string gmail;
     string jurusan;
     string fakultas;
     string universitas;
@@ -13,13 +15,13 @@ struct Node
     Node* prev;
 };
 
- struct Node* buatnode(string nama, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false ){
-    Node* newNode = new Node{nama, jurusan, fakultas, universitas, catatan, favorit, NULL, NULL};
+ struct Node* buatnode(string nama, string nohp, string gmail, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false ){
+    Node* newNode = new Node{nama,nohp, gmail, jurusan, fakultas, universitas, catatan, favorit, NULL, NULL};
     return newNode;
 }
 
-void sisipnodedepan(Node** head, string nama, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false) {
-    Node* newNode = buatnode(nama, jurusan, fakultas, universitas, catatan, favorit);
+void sisipnodedepan(Node** head, string nama, string nohp, string gmail, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false) {
+    Node* newNode = buatnode(nama, nohp, gmail, jurusan, fakultas, universitas, catatan, favorit);
     newNode->next = *head;
     if(*head != NULL) {
         (*head)->prev = newNode;
@@ -28,8 +30,8 @@ void sisipnodedepan(Node** head, string nama, string jurusan, string fakultas, s
     *head = newNode;
 }
 
-void sisipnodebelakang(Node** head, string nama, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false) {
-    Node* newNode = buatnode(nama, jurusan, fakultas, universitas, catatan, favorit);
+void sisipnodebelakang(Node** head, string nama, string nohp, string gmail, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false) {
+    Node* newNode = buatnode(nama, nohp, gmail, jurusan, fakultas, universitas, catatan, favorit);
     if(*head == NULL){
         *head = newNode;
         return;
@@ -52,7 +54,6 @@ Node* searching(Node* head, string nama) {
         bantu = bantu->next;
      }
      return NULL;
-     
 }
 
 void editkontak(Node* node) {
@@ -66,6 +67,14 @@ void editkontak(Node* node) {
     cout << "nama (" << node->nama << "): ";
     getline(cin, input);
     if(!input.empty()) node->nama = input;
+
+    cout << "nomor hp (" << node->nohp << "): ";
+    getline(cin, input);
+    if(!input.empty()) node->nohp = input;
+
+    cout << "Gmail (" << node->gmail << "): ";
+    getline(cin, input);
+    if(!input.empty()) node->gmail = input;
 
     cout << "Jurusan (" << node->jurusan << "): ";
     getline(cin, input);
@@ -91,11 +100,11 @@ void editkontak(Node* node) {
     cout << "Data kontak berhasil diperbarui!" << endl;
 }
 
-void sisipnodetengah(Node* nodekiri, string nama, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false) {
+void sisipnodetengah(Node* nodekiri, string nama, string nohp, string gmail, string jurusan, string fakultas, string universitas, string catatan = "", bool favorit = false) {
     if(nodekiri == NULL){
         cout << "Tidak ada Kontak" << endl;
     }
-    Node* newNode = buatnode(nama, jurusan, fakultas, universitas, catatan, favorit );
+    Node* newNode = buatnode(nama, nohp, gmail, jurusan, fakultas, universitas, catatan, favorit );
     newNode->next = nodekiri->next;
     newNode->prev = nodekiri;
 
@@ -176,8 +185,10 @@ void printdaridepan(Node* head){
     cout << "Kontak : " << endl;
     cout << "=====================================" << endl;
     while(bantu != NULL){
-        
+
         cout << "= " << i << ". " << bantu->nama << " (" << bantu->jurusan << ", " << bantu->fakultas << ", " << bantu->universitas << ")" << endl;
+        cout << "= " << "   " << "No. HP: " << bantu->nohp << endl;
+        cout << "= " << "   " << "Gmail : " << bantu->gmail << endl;
         i++;
         bantu = bantu->next;
     }
@@ -250,6 +261,8 @@ void sorting(Node** head, string kunci) {
 
             if (perluTukar) {
                 swap(curr->nama, curr->next->nama);
+                swap(curr->nohp, curr->next->nohp);
+                swap(curr->gmail, curr->next->gmail);
                 swap(curr->jurusan, curr->next->jurusan);
                 swap(curr->fakultas, curr->next->fakultas);
                 swap(curr->universitas, curr->next->universitas);
@@ -268,7 +281,7 @@ void sorting(Node** head, string kunci) {
 main() {
     Node* head = NULL;
     int pilihan;
-    string nama, jurusan, fakultas, universitas, catatan;
+    string nama, nohp, gmail, jurusan, fakultas, universitas, catatan;
     char lanjut = 'y';
 
     do {
@@ -313,6 +326,10 @@ main() {
             if (pilihan == 1) {
                 cout << "Masukkan Nama: ";
                 getline(cin, nama);
+                cout << "Masukkan No. HP: ";
+                getline(cin, nohp);
+                cout << "Masukkan email : ";
+                getline(cin, gmail);
                 cout << "Masukkan jurusan: ";
                 getline(cin, jurusan);
                 cout << "Masukkan fakultas: ";
@@ -326,10 +343,14 @@ main() {
                 cin >> favInput;
                 cin.ignore();
                 bool favorit = (favInput == 1);
-                sisipnodedepan(&head, nama, jurusan, fakultas, universitas, catatan, favorit);
+                sisipnodedepan(&head, nama, nohp, gmail, jurusan, fakultas, universitas, catatan, favorit);
             } else if (pilihan == 2) {
                 cout << "Masukkan Nama: ";
                 getline(cin, nama);
+                cout << "Masukkan No. HP: ";
+                getline(cin, nohp);
+                cout << "Masukkan email : ";
+                getline(cin,gmail);
                 cout << "Masukkan jurusan: ";
                 getline(cin, jurusan);
                 cout << "Masukkan fakultas: ";
@@ -343,7 +364,7 @@ main() {
                 cin >> favInput;
                 cin.ignore();
                 bool favorit = (favInput == 1);
-                sisipnodebelakang(&head, nama, jurusan, fakultas, universitas, catatan, favorit);
+                sisipnodebelakang(&head, nama, nohp, gmail, jurusan, fakultas, universitas, catatan, favorit);
             }
 
         } else if (pilihan == 2) {
@@ -354,6 +375,8 @@ main() {
             if (hasil != NULL) {
                 cout << "Kontak ditemukan!" << endl;
                 cout << "Nama       : " << hasil->nama << endl;
+                cout << "No. HP     : " << hasil->nohp << endl;
+                cout << "Email      : " << hasil->gmail << endl;
                 cout << "Jurusan    : " << hasil->jurusan << endl;
                 cout << "Fakultas   : " << hasil->fakultas << endl;
                 cout << "Universitas: " << hasil->universitas << endl;
