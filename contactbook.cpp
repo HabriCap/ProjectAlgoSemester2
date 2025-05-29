@@ -20,7 +20,7 @@ struct Node
     return newNode;
 }
 void simpanfile(Node* head) {
-    FILE* file = fopen("datakontak.txt", "a"); // mode append, biar tambah data terus
+    FILE* file = fopen("datakontak.txt", "a");
     if (file == NULL) {
         cout << "Gagal membuka file untuk menulis." << endl;
         return;
@@ -46,7 +46,7 @@ void simpanfile(Node* head) {
 
 void perbaruiIsiFile(Node* head)
 {
-    FILE* file = fopen("datakontak.txt", "w");  // mode write untuk overwrite file
+    FILE* file = fopen("datakontak.txt", "w"); 
     if (!file)
     {
         cout << "Gagal membuka file untuk menulis." << endl;
